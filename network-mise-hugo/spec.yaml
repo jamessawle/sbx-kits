@@ -1,0 +1,11 @@
+schemaVersion: "2"
+kind: mixin
+name: network-mise-hugo
+displayName: Mise Hugo network access
+description: Permits Hugo Extended version resolution
+
+caps:
+  network:
+    allow:
+      # GitHub release hosts are supplied by the community Mise kit.
+      - mise-versions.jdx.dev

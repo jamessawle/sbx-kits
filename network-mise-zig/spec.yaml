@@ -1,0 +1,10 @@
+schemaVersion: "2"
+kind: mixin
+name: network-mise-zig
+displayName: Mise Zig network access
+description: Permits Zig toolchain downloads
+
+caps:
+  network:
+    allow:
+      - ziglang.org

@@ -1,0 +1,18 @@
+schemaVersion: "2"
+kind: mixin
+name: network-mise-go
+displayName: Mise Go network access
+description: Permits Go toolchain and module downloads
+
+caps:
+  network:
+    allow:
+      # Version resolution and toolchain downloads.
+      - mise-versions.jdx.dev
+      - go.dev
+      - dl.google.com
+
+      # Module and checksum downloads.
+      - proxy.golang.org
+      - sum.golang.org
+      - storage.googleapis.com

@@ -1,0 +1,19 @@
+schemaVersion: "2"
+kind: mixin
+name: codex-cli
+displayName: Codex CLI
+description: Installs the pinned Codex CLI and permits its network access
+
+caps:
+  network:
+    allow:
+      - registry.npmjs.org
+      - chatgpt.com:443
+
+commands:
+  install:
+    # Pins an exact Codex CLI version — whatever was latest when this kit was
+    # tagged — so every sandbox built from a given kit ref installs the same
+    # CLI. Bump this and cut a new tag to move consumers to a newer Codex.
+    - command: npm install --global @openai/codex@0.145.0
+      description: Install Codex CLI 0.145.0

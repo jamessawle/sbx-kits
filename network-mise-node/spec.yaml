@@ -1,0 +1,15 @@
+schemaVersion: "2"
+kind: mixin
+name: network-mise-node
+displayName: Mise Node.js network access
+description: Permits Node.js toolchain and npm package downloads
+
+caps:
+  network:
+    allow:
+      # Version resolution and toolchain downloads.
+      - mise-versions.jdx.dev
+      - nodejs.org
+
+      # Package metadata and tarballs.
+      - registry.npmjs.org

@@ -1,0 +1,49 @@
+LICENSE
+  s_e9c3e166b4ee1a::t_353cb1773e0a75 1-21
+README.md
+  s_e9c3e166b4ee1a::t_eab9db30dacdee 1-67
+codex-cli/spec.yaml
+  s_2eaa6e2621d119::t_e048153113f530 1-19
+network-mise-go/spec.yaml
+  s_7739438128093e::t_597785305a06d5 1-18
+network-mise-hugo/spec.yaml
+  s_7739438128093e::t_9eb24ff28a39ba 1-11
+network-mise-node/spec.yaml
+  s_7739438128093e::t_35a5edb5d5e084 1-15
+network-mise-zig/spec.yaml
+  s_7739438128093e::t_41fa05a7eddde2 1-10
+.gitignore
+  s_e9c3e166b4ee1a::t_d48ad444b02730 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "3e6d1e4fd182501e87f6cfd4f1903de81a26c093",
+  "prompts": {},
+  "sessions": {
+    "s_2eaa6e2621d119": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faaca-34fc-7103-8b41-d8ae9e53212f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    },
+    "s_7739438128093e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29bb0817-a125-4798-ab33-0e1b270795e2",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    },
+    "s_e9c3e166b4ee1a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "73a9220a-5a09-492c-bcbe-8ef46c33ddfd",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    }
+  }
+}

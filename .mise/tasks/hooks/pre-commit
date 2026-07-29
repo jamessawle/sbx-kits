@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#MISE description="Validate the staged repository state"
+#MISE hide=true
+set -euo pipefail
+
+repository_root=$(git rev-parse --show-toplevel)
+hook_root=$(mktemp -d "${TMPDIR:-/tmp}/sbx-kits-pre-commit.XXXXXX")
+staged_root="$hook_root/repository"
+trap 'rm -rf "$hook_root"' EXIT HUP INT TERM
+
+mkdir -p "$staged_root"
+
+cd "$repository_root"
+git diff --cached --check
+git checkout-index --all --prefix="$staged_root/"
+
+if [[ ! -d "$repository_root/node_modules" ]]; then
+	echo "Repository dependencies are missing; run mise run setup." >&2
+	exit 1
+fi
+ln -s "$repository_root/node_modules" "$staged_root/node_modules"
+
+cd "$staged_root"
+export MISE_TRUSTED_CONFIG_PATHS="$staged_root"
+
+mise run fmt:check
+mise run lint

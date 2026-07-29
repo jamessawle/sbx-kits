@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#MISE description="Validate tags before they are pushed"
+#MISE hide=true
+#MISE raw=true
+set -euo pipefail
+
+repository_root=$(git rev-parse --show-toplevel)
+zero_oid=0000000000000000000000000000000000000000
+tag_refs=()
+tag_oids=()
+
+while read -r local_ref local_oid _remote_ref _remote_oid; do
+	[[ "$local_ref" == refs/tags/* ]] || continue
+	[[ "$local_oid" != "$zero_oid" ]] || continue
+
+	tag_refs+=("$local_ref")
+	tag_oids+=("$local_oid")
+done
+
+((${#tag_refs[@]} > 0)) || exit 0
+
+hook_root=$(mktemp -d "${TMPDIR:-/tmp}/sbx-kits-pre-push.XXXXXX")
+trap 'rm -rf "$hook_root"' EXIT HUP INT TERM
+
+for index in "${!tag_refs[@]}"; do
+	tag_ref=${tag_refs[$index]}
+	tag_oid=${tag_oids[$index]}
+	tag_root="$hook_root/tag-$index"
+
+	mkdir -p "$tag_root"
+	git -C "$repository_root" archive "$tag_oid" | tar -x -C "$tag_root"
+
+	printf 'Validating tag %s...\n' "${tag_ref#refs/tags/}"
+
+	(
+		cd "$tag_root"
+		export MISE_TRUSTED_CONFIG_PATHS="$tag_root"
+		mise install
+		npm ci
+		mise run validate
+	)
+done

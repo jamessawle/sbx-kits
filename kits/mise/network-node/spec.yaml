@@ -1,6 +1,6 @@
 schemaVersion: "2"
 kind: mixin
-name: network-mise-node
+name: mise-network-node
 displayName: Mise Node.js network access
 description: Permits Node.js toolchain and npm package downloads
 

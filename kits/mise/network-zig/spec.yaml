@@ -1,6 +1,6 @@
 schemaVersion: "2"
 kind: mixin
-name: network-mise-zig
+name: mise-network-zig
 displayName: Mise Zig network access
 description: Permits Zig toolchain downloads
 

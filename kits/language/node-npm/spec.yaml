@@ -1,0 +1,35 @@
+schemaVersion: "2"
+kind: mixin
+name: language-node-npm
+displayName: Node.js npm workspace isolation
+description: Keeps Linux node_modules out of bind-mounted host workspaces
+
+caps:
+  network:
+    allow:
+      - registry.npmjs.org
+
+commands:
+  initFiles:
+    - path: /home/agent/.cache/node-bind-mounts/.keep
+      mode: "0644"
+      content: ""
+      description: Materialize sandbox-local Node.js storage
+  startup:
+    - command:
+        - bash
+        - -c
+        - |
+          set -euo pipefail
+          : "${WORKSPACE_DIR:?WORKSPACE_DIR must be set}"
+          target="$WORKSPACE_DIR/node_modules"
+          workspace_id=$(printf '%s' "$WORKSPACE_DIR" | sha256sum)
+          workspace_id=${workspace_id%% *}
+          source="/home/agent/.cache/node-bind-mounts/$workspace_id/node_modules"
+
+          mountpoint -q "$target" 2>/dev/null && exit 0
+          install -d -o 1000 -g 1000 "$source"
+          mkdir -p "$target"
+          mount --bind "$source" "$target"
+      user: "0"
+      description: Bind-mount sandbox-local storage over workspace node_modules

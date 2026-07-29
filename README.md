@@ -1,66 +1,87 @@
 # sbx-kits
 
+[![Latest tag](https://img.shields.io/github/v/tag/jamessawle/sbx-kits?sort=semver)](https://github.com/jamessawle/sbx-kits/tags)
+
 Reusable [Docker Sandbox](https://docs.docker.com/ai/sandboxes/) (`sbx`) kits
-for running coding agents in isolated environments. Each kit is a `schemaVersion: "2"`
-`mixin` that grants a focused capability — a network allowlist for a specific
-toolchain, or a pinned CLI install — so a project's `sandbox.sh` can compose
-just the kits it needs instead of hand-maintaining one large policy.
+for running coding agents in isolated environments. Each kit grants one focused
+capability so projects can compose the policy they need.
 
 Tested with `sbx 0.35.0`.
 
+> [!IMPORTANT]
+> Docker Sandbox will reject these kits unless its allowed-sources policy
+> includes `github.com/jamessawle/`. The usage example below sets this policy
+> for the `sbx create` command with
+> `DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES`.
+
 ## Kits
 
-| Kit | Purpose |
-|-----|---------|
-| [`codex-cli`](codex-cli/) | Installs the pinned Codex CLI and permits its network access (`registry.npmjs.org`, `chatgpt.com`). |
-| [`network-mise-go`](network-mise-go/) | Permits the Go toolchain, module, and checksum downloads used by [Mise](https://mise.jdx.dev/). |
-| [`network-mise-hugo`](network-mise-hugo/) | Permits Hugo Extended version resolution via Mise. |
-| [`network-mise-node`](network-mise-node/) | Permits the Node.js toolchain and npm package downloads used by Mise. |
-| [`network-mise-zig`](network-mise-zig/) | Permits Zig toolchain downloads. |
+### Harness
 
-The `network-mise-*` kits cover only the hosts each toolchain reaches *beyond*
-those already supplied by the community
-[Mise kit](https://github.com/docker/sbx-kits-contrib/tree/main/mise), which
-should be composed alongside them.
+Harness kits install or override coding-agent CLIs independently of the Docker
+Sandbox release.
+
+| Kit                          | dir                | Purpose                                                              |
+| ---------------------------- | ------------------ | -------------------------------------------------------------------- |
+| [Codex](kits/harness/codex/) | kits/harness/codex | Pins Codex independently of the version bundled with Docker Sandbox. |
+
+### Language
+
+Language kits isolate platform-specific project state from the bind-mounted
+host workspace. They can be used independently when their toolchain is already
+available.
+
+| Kit                                     | dir                     | Purpose                                                          |
+| --------------------------------------- | ----------------------- | ---------------------------------------------------------------- |
+| [Node & npm](kits/language/node-npm/)   | kits/language/node-npm  | Isolates Linux `node_modules` and permits npm package downloads. |
+| [Python & uv](kits/language/python-uv/) | kits/language/python-uv | Isolates Python generated state and permits package downloads.   |
+
+### Mise network
+
+Mise network kits grant the additional hosts required to resolve and install a
+specific toolchain. Compose them with the community
+[Mise kit](https://github.com/docker/sbx-kits-contrib/tree/main/mise).
+
+| Kit                                                 | dir                         | Purpose                                                       |
+| --------------------------------------------------- | --------------------------- | ------------------------------------------------------------- |
+| [Go Network](kits/mise/network-go/)                 | kits/mise/network-go        | Permits Go toolchain, module, and checksum downloads.         |
+| [Hugo Network](kits/mise/network-hugo/)             | kits/mise/network-hugo      | Permits Hugo Extended version resolution.                     |
+| [Node.js Network](kits/mise/network-node/)          | kits/mise/network-node      | Permits Node.js toolchain and npm package downloads.          |
+| [Python & uv Network](kits/mise/network-python-uv/) | kits/mise/network-python-uv | Permits Python, uv, Pyright toolchain, and package downloads. |
+| [Zig Network](kits/mise/network-zig/)               | kits/mise/network-zig       | Permits Zig toolchain downloads.                              |
+
+Each kit's README documents its capabilities, composition, and operational
+constraints.
 
 ## Usage
 
-Reference a kit remotely from your project's sandbox composition — `sbx`
-fetches and pins it, so consumers need no clone and no vendoring:
+Reference a kit by tag and directory:
 
-```sh
-git+https://github.com/jamessawle/sbx-kits.git#ref=v0.1.0&dir=codex-cli
+```text
+git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/harness/codex
 ```
 
-- `ref=` — the release to pin. **Tags here are immutable**: a fix ships as a
-  new tag (`v0.1.1`), never by re-pointing an existing one, so a pinned
-  consumer's sandbox policy can't change underneath it. Pin a commit SHA
-  instead if you want a guarantee independent of that convention.
-- `dir=` — the kit's directory in this repo.
-
-### Allowed sources
-
-`sbx` only fetches remote kits from namespaces on its allowed-sources list. A
-project pulling from here must include `github.com/jamessawle/`:
+For example, a Node.js Codex sandbox can compose the community Mise kit with
+the Codex, Node.js network, and Node.js workspace-isolation kits:
 
 ```sh
 DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES='["docker.io/","github.com/docker/","github.com/jamessawle/"]' \
-  sbx create --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.1.0&dir=codex-cli' ...
+  sbx create --name my-project \
+    --kit 'git+https://github.com/docker/sbx-kits-contrib.git#ref=v0.12.0&dir=mise' \
+    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/harness/codex' \
+    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/language/node-npm' \
+    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/mise/network-node' \
+    codex .
 ```
 
-### Validate
+Tags are immutable snapshots of every kit in the repository. Pin a tag and
+upgrade deliberately; use a commit SHA if you need a guarantee independent of
+that convention.
 
-```sh
-DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES='["github.com/jamessawle/"]' \
-  sbx kit validate 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.1.0&dir=codex-cli'
-```
+## Contributing
 
-## Versioning
-
-Kits are released together under a single repo tag. Because they only grant
-network and install capabilities, treat every tag as an immutable snapshot of
-policy — publish changes as new tags and let consumers upgrade `ref=`
-deliberately.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development environment,
+validation commands, and release checks.
 
 ## License
 

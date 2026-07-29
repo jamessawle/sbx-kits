@@ -1,0 +1,19 @@
+schemaVersion: "2"
+kind: mixin
+name: harness-codex
+displayName: Codex CLI version override
+description: Pins Codex independently of the version bundled with Docker Sandbox
+
+caps:
+  network:
+    allow:
+      - registry.npmjs.org
+      - chatgpt.com:443
+
+commands:
+  install:
+    # Docker Sandbox couples its bundled Codex version to the sbx release.
+    # Installing an exact version here lets consumers upgrade either one
+    # independently. Bump this pin and cut a new tag to upgrade Codex.
+    - command: npm install --global @openai/codex@0.145.0
+      description: Override the bundled Codex CLI with version 0.145.0

@@ -1,0 +1,8 @@
+{
+  "config": {
+    // Keep prose wrapping under the author's control.
+    "MD013": false,
+  },
+  "gitignore": true,
+  "globs": ["**/*.md"],
+}

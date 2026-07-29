@@ -1,0 +1,12 @@
+{
+  "name": "sbx-kits",
+  "private": true,
+  "engines": {
+    "node": "24.4.1"
+  },
+  "packageManager": "npm@11.4.2",
+  "devDependencies": {
+    "markdownlint-cli2": "0.23.2",
+    "prettier": "3.9.6"
+  }
+}

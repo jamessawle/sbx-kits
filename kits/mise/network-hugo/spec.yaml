@@ -1,6 +1,6 @@
 schemaVersion: "2"
 kind: mixin
-name: network-mise-hugo
+name: mise-network-hugo
 displayName: Mise Hugo network access
 description: Permits Hugo Extended version resolution
 

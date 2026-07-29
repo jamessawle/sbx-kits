@@ -1,0 +1,21 @@
+schemaVersion: "2"
+kind: mixin
+name: language-python-uv
+displayName: Python and uv workspace isolation
+description: Keeps Python and uv generated state out of bind-mounted workspaces
+
+caps:
+  network:
+    allow:
+      - pypi.org
+      - files.pythonhosted.org
+
+environment:
+  variables:
+    # Source is mounted from the host, but the Linux virtual environment is
+    # sandbox state and must not replace a host platform's .venv.
+    UV_PROJECT_ENVIRONMENT: /home/agent/.cache/python-uv/venv
+
+    # Preserve bytecode caching without creating __pycache__ directories in
+    # the mounted repository.
+    PYTHONPYCACHEPREFIX: /home/agent/.cache/python-uv/pycache

@@ -1,0 +1,44 @@
+min_version = "2026.5.2"
+
+[tools]
+node = "24.4.1"
+shellcheck = "0.11.0"
+shfmt = "3.13.1"
+tombi = "1.2.4"
+
+[tasks.setup]
+description = "Install repository tools and dependencies"
+run = [
+  "mise install",
+  "npm ci",
+  "git config core.hooksPath .githooks",
+]
+
+[tasks.validate]
+description = "Run all checks, including Docker Sandbox kit validation"
+depends = ["fmt:check", "lint"]
+run = "./.docker-sbx/sandbox.sh validate"
+
+[tasks."fmt:check"]
+description = "Check source formatting"
+run = [
+  'npm exec -- prettier --check "**/*.{json,jsonc,md,yaml}"',
+  "tombi format --offline --check mise.toml",
+  "shfmt -d .docker-sbx/sandbox.sh .githooks .mise/tasks",
+]
+
+[tasks.fmt]
+description = "Format authored source files"
+run = [
+  'npm exec -- prettier --write "**/*.{json,jsonc,md,yaml}"',
+  "tombi format --offline mise.toml",
+  "shfmt -w .docker-sbx/sandbox.sh .githooks .mise/tasks",
+]
+
+[tasks.lint]
+description = "Run static analysis"
+run = [
+  "npm exec -- markdownlint-cli2",
+  "tombi lint --offline --error-on-warnings mise.toml",
+  "shellcheck .docker-sbx/sandbox.sh .githooks/* .mise/tasks/sandbox .mise/tasks/hooks/*",
+]

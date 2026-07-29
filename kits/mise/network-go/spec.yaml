@@ -1,6 +1,6 @@
 schemaVersion: "2"
 kind: mixin
-name: network-mise-go
+name: mise-network-go
 displayName: Mise Go network access
 description: Permits Go toolchain and module downloads
 

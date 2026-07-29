@@ -1,0 +1,50 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install repository tools
+        uses: jdx/mise-action@v4.2.3
+        with:
+          cache: true
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Install Docker Sandbox CLI
+        env:
+          SBX_CHECKSUM: 770abf7f91b13aba86cc7bb7d548b8e07c812d5a109321905e7b7da0ad07d998
+          SBX_VERSION: 0.37.0
+        run: |
+          archive=$(mktemp)
+          extract_dir=$(mktemp -d)
+          curl --fail --location --silent --show-error \
+            "https://github.com/docker/sbx-releases/releases/download/v${SBX_VERSION}/DockerSandboxes-linux-amd64.tar.gz" \
+            --output "$archive"
+          printf '%s  %s\n' "$SBX_CHECKSUM" "$archive" | sha256sum --check
+          tar -xzf "$archive" -C "$extract_dir"
+          sudo install -m 0755 "$extract_dir/docker-sbx/sbx" /usr/local/bin/sbx
+          sbx version
+
+      - name: Validate repository
+        run: mise validate

@@ -1,0 +1,69 @@
+.githooks/pre-commit
+  s_d3b29334ef5c9f::t_70768b83257229 1-8
+.githooks/pre-push
+  s_d3b29334ef5c9f::t_ed35cb029729d7 1-8
+.markdownlint-cli2.jsonc
+  s_d3b29334ef5c9f::t_c1b5743b3fd649 1-8
+package-lock.json
+  s_d3b29334ef5c9f::t_804a8b8917804f 1-1385
+.docker-sbx/README.md
+  s_d3b29334ef5c9f::t_3a0f01f605d746 1-32
+.docker-sbx/sandbox.sh
+  s_d3b29334ef5c9f::t_a5e8b62b255e49 1-90
+.gitignore
+  s_d3b29334ef5c9f::t_bdfc7de1303da0 2
+.mise/tasks/sandbox
+  s_d3b29334ef5c9f::t_cb75599aa79747 1-9
+.prettierrc.json
+  s_d3b29334ef5c9f::t_57092a91c3db49 1-4
+kits/harness/codex/README.md
+  s_d3b29334ef5c9f::t_2924156932a1c1 1-24
+kits/harness/codex/spec.yaml
+  s_d3b29334ef5c9f::t_d0ee4f1a0f8f4c 3-5,15-17,19
+kits/language/node-npm/README.md
+  s_d3b29334ef5c9f::t_6ca2eda525f10b 1-55
+kits/language/node-npm/spec.yaml
+  s_d3b29334ef5c9f::t_cb4e22f1a65ea0 1-35
+kits/language/python-uv/README.md
+  s_d3b29334ef5c9f::t_7c9ef6fb21f83e 1-25
+kits/language/python-uv/spec.yaml
+  s_d3b29334ef5c9f::t_6a1ca1525cde36 1-21
+kits/mise/network-go/README.md
+  s_d3b29334ef5c9f::t_b51e2829b8ab07 1-21
+kits/mise/network-go/spec.yaml
+  s_d3b29334ef5c9f::t_cb33e329c6935c 3
+kits/mise/network-hugo/README.md
+  s_d3b29334ef5c9f::t_b7b0ac85dd270d 1-17
+kits/mise/network-hugo/spec.yaml
+  s_d3b29334ef5c9f::t_b175a6f9a0d487 3
+kits/mise/network-node/README.md
+  s_d3b29334ef5c9f::t_92e16db79bb1f9 1-23
+kits/mise/network-node/spec.yaml
+  s_d3b29334ef5c9f::t_86001049cd3339 3
+kits/mise/network-python-uv/README.md
+  s_d3b29334ef5c9f::t_e381fbaeba9c70 1-25
+kits/mise/network-python-uv/spec.yaml
+  s_d3b29334ef5c9f::t_756677b1b9d269 1-20
+kits/mise/network-zig/README.md
+  s_d3b29334ef5c9f::t_c26f03b36b7c7e 1-16
+kits/mise/network-zig/spec.yaml
+  s_d3b29334ef5c9f::t_a739dbaf177c4c 3
+package.json
+  s_d3b29334ef5c9f::t_2a34d068be08d5 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "3a55389c8c7792f28576c37d2d9a0da5d6c68e84",
+  "prompts": {},
+  "sessions": {
+    "s_d3b29334ef5c9f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fab0e-a499-79c1-a9d7-c0da9f85ae5a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    }
+  }
+}

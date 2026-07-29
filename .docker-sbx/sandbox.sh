@@ -9,6 +9,7 @@ community_mise_kit='git+https://github.com/docker/sbx-kits-contrib.git#ref=v0.12
 repository_kits=("$repository_root"/kits/*/*)
 sandbox_kits=(
 	"$community_mise_kit"
+	"$repository_root/.docker-sbx/kits/sbx-validator"
 	"$repository_root/kits/harness/codex"
 	"$repository_root/kits/language/node-npm"
 	"$repository_root/kits/mise/network-node"

@@ -15,5 +15,5 @@ commands:
     # Docker Sandbox couples its bundled Codex version to the sbx release.
     # Installing an exact version here lets consumers upgrade either one
     # independently. Bump this pin and cut a new tag to upgrade Codex.
-    - command: npm install --global @openai/codex@0.145.0
+    - command: npm install --global @openai/codex@0.147.0
       description: Override the bundled Codex CLI with the pinned version

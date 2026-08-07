@@ -1,0 +1,36 @@
+version: 2
+
+updates:
+  # Repository tooling only. Dependencies embedded in kits/** are managed by
+  # the custom update-kit-dependencies workflow.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:17"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:47"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 5
+    groups:
+      actions-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch

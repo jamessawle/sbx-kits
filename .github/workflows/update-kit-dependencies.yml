@@ -66,4 +66,4 @@ jobs:
             )
           fi
 
-          gh pr merge --auto --squash "$pull_request"
+          gh pr merge --auto --merge "$pull_request"

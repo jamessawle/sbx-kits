@@ -1,0 +1,39 @@
+kits/language/python-uv/README.md
+  s_3fa33e13dae79e::t_a5871062edd5e5 3-5,18-40,42,44-48
+scripts/validate-kit-metadata.mjs
+  s_3fa33e13dae79e::t_33a334a1504251 11-18,35-44,48-51,53-58,73-74,86-115,125-130
+test/validate-kit-metadata.test.mjs
+  s_3fa33e13dae79e::t_144923258d0795 9-37,40,48-58,95-96,116-144
+.github/workflows/pr-check.yml
+  s_3fa33e13dae79e::t_2a519a8fb6043e 42-55
+kits/harness/codex/README.md
+  s_3fa33e13dae79e::t_93c9e57383f9b9 3-5,9,11,15-31,33,35-38
+kits/language/node-npm/README.md
+  s_3fa33e13dae79e::t_c8b0d19d5cefc0 3-5,17-38,40,72-73
+kits/mise/network-go/README.md
+  s_3fa33e13dae79e::t_3535ec3609c9c8 3-5,17-31,33,35-37
+kits/mise/network-hugo/README.md
+  s_3fa33e13dae79e::t_2cf89a316d1eb0 3-5,13-28,30,32-34
+kits/mise/network-node/README.md
+  s_3fa33e13dae79e::t_71b3c3c6a666c8 3-5,15-30,32
+kits/mise/network-python-uv/README.md
+  s_3fa33e13dae79e::t_c3c9f556bc1db9 3-5,16-19,22-34,38-39
+kits/mise/network-zig/README.md
+  s_3fa33e13dae79e::t_4fafe5604bd359 3-5,13-26,28,30-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "a01808c57a01d0dace65868f8db74d2b5059ec90",
+  "prompts": {},
+  "sessions": {
+    "s_3fa33e13dae79e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fdc8b-e2ac-7e80-98a4-5863f690f3b6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    }
+  }
+}

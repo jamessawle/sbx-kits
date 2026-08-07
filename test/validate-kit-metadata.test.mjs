@@ -6,9 +6,38 @@ import { test } from "node:test";
 
 import { validateRepository } from "../scripts/validate-kit-metadata.mjs";
 
+function validKitReadme({ name, description = "Example kit" }) {
+  return `# ${name}
+
+${description}.
+
+Specification: [\`spec.yaml\`](spec.yaml)
+
+## Capabilities
+
+Capabilities.
+
+## Composition
+
+Composition.
+
+## Externally visible behavior
+
+Behavior.
+
+## Security implications
+
+Security.
+
+## Operational constraints
+
+Constraints.
+`;
+}
+
 function fixture({
   catalogue = ["kits/language/example"],
-  kits = [{ directory: "kits/language/example", name: "language-example", readme: true }],
+  kits = [{ directory: "kits/language/example", name: "language-example" }],
   versions = ["1.2.3", "1.2.3", "1.2.3"],
 } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbx-kits-metadata-"));
@@ -16,8 +45,17 @@ function fixture({
   for (const kit of kits) {
     const directory = join(root, kit.directory);
     mkdirSync(directory, { recursive: true });
-    writeFileSync(join(directory, "spec.yaml"), `schemaVersion: "2"\nname: ${kit.name}\n`);
-    if (kit.readme) writeFileSync(join(directory, "README.md"), `# ${kit.name}\n`);
+    const description = kit.description ?? "Example kit";
+    writeFileSync(
+      join(directory, "spec.yaml"),
+      `schemaVersion: "2"\nkind: mixin\nname: ${kit.name}\ndisplayName: Example kit\ndescription: ${description}\n`,
+    );
+    if (kit.readme !== false) {
+      writeFileSync(
+        join(directory, "README.md"),
+        typeof kit.readme === "string" ? kit.readme : validKitReadme({ ...kit, description }),
+      );
+    }
   }
 
   writeFileSync(
@@ -54,8 +92,8 @@ test("reports duplicate kit names", () => {
     fixture({
       catalogue: ["kits/language/one", "kits/mise/two"],
       kits: [
-        { directory: "kits/language/one", name: "duplicate", readme: true },
-        { directory: "kits/mise/two", name: "duplicate", readme: true },
+        { directory: "kits/language/one", name: "duplicate" },
+        { directory: "kits/mise/two", name: "duplicate" },
       ],
     }),
   );
@@ -74,4 +112,33 @@ test("reports inconsistent compatibility versions", () => {
   const errors = validateRepository(fixture({ versions: ["1.2.3", "1.2.4", "1.2.3"] }));
 
   assert(errors.some((error) => error.includes("compatibility versions disagree")));
+});
+
+test("reports duplicated catalogue entries", () => {
+  const errors = validateRepository(
+    fixture({ catalogue: ["kits/language/example", "kits/language/example"] }),
+  );
+
+  assert(
+    errors.some((error) => error.includes("catalogue lists kits/language/example more than once")),
+  );
+});
+
+test("reports kit reference metadata and structure drift", () => {
+  const errors = validateRepository(
+    fixture({
+      kits: [
+        {
+          directory: "kits/language/example",
+          name: "language-example",
+          readme: "# wrong-name\n\nWrong summary.\n",
+        },
+      ],
+    }),
+  );
+
+  assert(errors.some((error) => error.includes("heading must match kit name")));
+  assert(errors.some((error) => error.includes("summary must match")));
+  assert(errors.some((error) => error.includes("must link to its spec.yaml")));
+  assert(errors.some((error) => error.includes('missing the "Capabilities" section')));
 });

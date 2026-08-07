@@ -1,6 +1,8 @@
 # language-node-npm
 
-Keeps Linux `node_modules` isolated from a bind-mounted host workspace.
+Keeps Linux node_modules out of bind-mounted host workspaces.
+
+Specification: [`spec.yaml`](spec.yaml)
 
 ## Capabilities
 
@@ -12,11 +14,30 @@ Keeps Linux `node_modules` isolated from a bind-mounted host workspace.
 
 ## Composition
 
-Use this kit by itself when Node.js and npm are already installed. Compose with
-[`mise-network-node`](../../mise/network-node/) when Mise must resolve or
-install Node.js; the overlapping npm registry allowance is intentional.
+Use this mixin by itself when Node.js and npm are already installed. Compose it
+with [`mise-network-node`](../../mise/network-node/) and the community Mise kit
+when Mise must resolve or install Node.js. The overlapping npm registry
+allowance is intentional.
 
-## Operational notes
+## Externally visible behavior
+
+On every start, the kit derives a stable storage directory from
+`$WORKSPACE_DIR`, creates `<workspace>/node_modules`, and bind-mounts the
+sandbox-local directory over it. Files in a host `node_modules` directory are
+hidden inside the sandbox but remain unchanged on the host.
+
+The mount source is under `/home/agent/.cache/node-bind-mounts/` and is owned by
+UID and GID `1000` after creation.
+
+## Security implications
+
+The startup hook runs as root because creating a bind mount requires elevated
+privileges. It mounts only the computed sandbox-local directory over the
+workspace's `node_modules`. The kit also permits outbound HTTPS requests to
+`registry.npmjs.org`; npm packages remain part of the consuming project's
+supply chain.
+
+## Operational constraints
 
 Docker Sandbox startup hooks do not gate the agent or `sbx exec`. Automation
 that installs dependencies immediately after a sandbox starts must wait until
@@ -48,7 +69,8 @@ sbx exec \
 ```
 
 This waits for up to 30 seconds and fails without touching dependencies if the
-mount does not become ready.
+mount does not become ready. `WORKSPACE_DIR` must be set by Docker Sandbox; the
+startup hook fails if it is absent.
 
 Recreating the sandbox removes its isolated `node_modules`; run the project's
 dependency setup again after a rebuild. This kit does not install Node.js or

@@ -8,6 +8,14 @@ const compatibilityFiles = [
   [".github/workflows/release.yml", /SBX_VERSION: (\d+\.\d+\.\d+)/],
 ];
 
+const requiredKitReadmeSections = [
+  "Capabilities",
+  "Composition",
+  "Externally visible behavior",
+  "Security implications",
+  "Operational constraints",
+];
+
 function kitDirectories(root) {
   const kitsRoot = resolve(root, "kits");
 
@@ -24,14 +32,30 @@ function kitDirectories(root) {
     .sort();
 }
 
-function kitName(spec) {
-  return spec.match(/^name:\s*["']?([^\s"']+)["']?\s*$/m)?.[1];
+function yamlScalar(spec, field) {
+  return spec.match(new RegExp(`^${field}:\\s*["']?([^\\n"']+?)["']?\\s*$`, "m"))?.[1];
+}
+
+function kitMetadata(spec) {
+  return {
+    name: yamlScalar(spec, "name"),
+    displayName: yamlScalar(spec, "displayName"),
+    description: yamlScalar(spec, "description"),
+  };
 }
 
 function cataloguePaths(readme) {
-  const catalogue = readme.match(/^## Kits\s*$([\s\S]*?)(?=^##\s)/m)?.[1] ?? "";
+  const catalogue = readme.match(/^## (?:Kits|Kit catalogue)\s*$([\s\S]*?)(?=^##\s)/m)?.[1] ?? "";
 
-  return [...catalogue.matchAll(/\b(kits\/[^/\s|)]+\/[^/\s|)]+)\/?/g)].map((match) => match[1]);
+  return [...catalogue.matchAll(/\]\((kits\/[^/\s)]+\/[^/\s)]+)\/?\)/g)].map((match) => match[1]);
+}
+
+function normalizeProse(value) {
+  return value.replace(/\s+/g, " ").trim().replace(/\.$/, "");
+}
+
+function kitReadmeSummary(readme) {
+  return readme.match(/^#\s+[^\n]+\n\s*\n([\s\S]*?)(?=\n\s*\n)/)?.[1];
 }
 
 export function validateRepository(root) {
@@ -46,7 +70,8 @@ export function validateRepository(root) {
     }
 
     const specPath = resolve(root, directory, "spec.yaml");
-    const name = kitName(readFileSync(specPath, "utf8"));
+    const metadata = kitMetadata(readFileSync(specPath, "utf8"));
+    const { name } = metadata;
     if (!name) {
       errors.push(`${directory}/spec.yaml has no top-level name`);
       continue;
@@ -58,6 +83,36 @@ export function validateRepository(root) {
     } else {
       names.set(name, directory);
     }
+
+    if (!metadata.displayName) {
+      errors.push(`${directory}/spec.yaml has no top-level displayName`);
+    }
+    if (!metadata.description) {
+      errors.push(`${directory}/spec.yaml has no top-level description`);
+    }
+
+    if (existsSync(readmePath)) {
+      const readme = readFileSync(readmePath, "utf8");
+      const heading = readme.match(/^#\s+(.+)$/m)?.[1];
+      if (heading !== name) {
+        errors.push(`${directory}/README.md heading must match kit name ${JSON.stringify(name)}`);
+      }
+
+      const summary = kitReadmeSummary(readme);
+      if (!summary || normalizeProse(summary) !== normalizeProse(metadata.description ?? "")) {
+        errors.push(`${directory}/README.md summary must match its spec.yaml description`);
+      }
+
+      if (!readme.includes("[`spec.yaml`](spec.yaml)")) {
+        errors.push(`${directory}/README.md must link to its spec.yaml`);
+      }
+
+      for (const section of requiredKitReadmeSections) {
+        if (!readme.includes(`\n## ${section}\n`)) {
+          errors.push(`${directory}/README.md is missing the ${JSON.stringify(section)} section`);
+        }
+      }
+    }
   }
 
   const rootReadme = resolve(root, "README.md");
@@ -66,6 +121,12 @@ export function validateRepository(root) {
   } else {
     const paths = cataloguePaths(readFileSync(rootReadme, "utf8"));
     const listed = new Set(paths);
+
+    for (const path of listed) {
+      if (paths.filter((candidate) => candidate === path).length > 1) {
+        errors.push(`README.md catalogue lists ${path} more than once`);
+      }
+    }
 
     for (const path of paths) {
       if (!directories.includes(path)) {

@@ -2,6 +2,7 @@ min_version = "2026.5.2"
 
 [tools]
 actionlint = "1.7.12"
+lychee = "0.24.2"
 node = "24.4.1"
 shellcheck = "0.11.0"
 shfmt = "3.13.1"
@@ -47,6 +48,7 @@ run = [
 
 [tasks.lint]
 description = "Run static analysis"
+depends = ["lint:links"]
 run = [
   "actionlint .github/workflows/*.yml",
   "zizmor .github/workflows",
@@ -54,3 +56,7 @@ run = [
   "tombi lint --offline --error-on-warnings mise.toml",
   "shellcheck .docker-sbx/sandbox.sh .githooks/* .mise/tasks/sandbox .mise/tasks/hooks/*",
 ]
+
+[tasks."lint:links"]
+description = "Check local Markdown links and heading anchors"
+run = """lychee --offline --include-fragments --index-files README.md --no-progress --exclude-path node_modules --exclude-path .git --exclude-path lychee './**/*.md'"""

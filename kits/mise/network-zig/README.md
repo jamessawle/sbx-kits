@@ -1,6 +1,8 @@
 # mise-network-zig
 
-Permits Zig toolchain downloads used through Mise.
+Permits Zig toolchain downloads.
+
+Specification: [`spec.yaml`](spec.yaml)
 
 ## Capabilities
 
@@ -8,9 +10,22 @@ Permits Zig toolchain downloads used through Mise.
 
 ## Composition
 
-Compose with the community
-[Mise kit](https://github.com/docker/sbx-kits-contrib/tree/main/mise).
+Compose this mixin with the community
+[Mise kit](https://github.com/docker/sbx-kits-contrib/tree/main/mise) and a
+project that declares its Zig version.
 
-## Operational notes
+## Externally visible behavior
 
-This kit does not install Zig or configure a project toolchain version.
+`ziglang.org` is added to the sandbox's outbound network policy. The kit runs
+no commands, writes no files, and sets no environment variables.
+
+## Security implications
+
+The sandbox can download executable Zig toolchains from `ziglang.org`. Review
+the selected version before execution; organization policy may still deny the
+host.
+
+## Operational constraints
+
+This kit grants network access only. It does not install Zig or configure a
+project toolchain version.

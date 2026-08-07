@@ -1,13 +1,16 @@
-name: Pull request checks
+name: Repository checks
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pr-check-${{ github.ref }}
+  group: repository-check-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

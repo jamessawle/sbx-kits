@@ -1,6 +1,8 @@
 name: Auto-merge Dependabot updates
 
 on:
+  # This workflow never checks out or runs pull-request code.
+  # zizmor: ignore[dangerous-triggers]
   pull_request_target:
     types:
       - opened
@@ -21,7 +23,7 @@ jobs:
     steps:
       - name: Read Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v3.1.0
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
 
       - name: Enable auto-merge for minor and patch updates
         if: >-

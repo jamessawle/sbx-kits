@@ -1,0 +1,41 @@
+.github/scripts/update-kit-dependencies.mjs
+  s_7573def1716dc1::t_fb544dad292432 3-4,6-8,10-25,27,30-37,39-50,53-71,73-75,78-81
+TESTING.md
+  s_06a0878c5f37f4::t_a584cd17ca4a73 1-72
+test/kit-runtime.test.mjs
+  s_06a0878c5f37f4::t_37f69dbe65b4f3 1-100
+test/update-kit-dependencies.test.mjs
+  s_7573def1716dc1::t_b4d481fe0130a2 1-153
+CONTRIBUTING.md
+  s_06a0878c5f37f4::t_41c3e342e08074 45,52-54
+mise.toml
+  s_06a0878c5f37f4::t_8897316854b5b7 26
+package.json
+  s_06a0878c5f37f4::t_e45d4331f3d385 9
+test/shell-automation.test.mjs
+  s_06a0878c5f37f4::t_89ef6266c649a2 1-216
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "919aa7a7705d329b4563753a7d8c2cf66de838cb",
+  "prompts": {},
+  "sessions": {
+    "s_06a0878c5f37f4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fdca4-8d99-73d3-87ef-dec915f4b12a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    },
+    "s_7573def1716dc1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b339f447-b1ac-447c-a543-a9819a71806f",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    }
+  }
+}

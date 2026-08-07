@@ -58,7 +58,7 @@ constraints.
 Reference a kit by tag and directory:
 
 ```text
-git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/harness/codex
+git+https://github.com/jamessawle/sbx-kits.git#ref=v2026.08.01&dir=kits/harness/codex
 ```
 
 For example, a Node.js Codex sandbox can compose the community Mise kit with
@@ -68,9 +68,9 @@ the Codex, Node.js network, and Node.js workspace-isolation kits:
 DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES='["docker.io/","github.com/docker/","github.com/jamessawle/"]' \
   sbx create --name my-project \
     --kit 'git+https://github.com/docker/sbx-kits-contrib.git#ref=v0.12.0&dir=mise' \
-    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/harness/codex' \
-    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/language/node-npm' \
-    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v0.2.0&dir=kits/mise/network-node' \
+    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v2026.08.01&dir=kits/harness/codex' \
+    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v2026.08.01&dir=kits/language/node-npm' \
+    --kit 'git+https://github.com/jamessawle/sbx-kits.git#ref=v2026.08.01&dir=kits/mise/network-node' \
     codex .
 ```
 
@@ -79,7 +79,9 @@ sequence within the month. A release is created whenever a change under
 `kits/` reaches `main`; months without kit changes have no release. Tags are
 immutable snapshots of every kit in the repository. Pin a tag and upgrade
 deliberately; use a commit SHA if you need a guarantee independent of that
-convention.
+convention. The examples above pin a known release and are updated when usage
+documentation changes; check the latest-release badge before copying them if
+you want a newer snapshot.
 
 ## Contributing
 

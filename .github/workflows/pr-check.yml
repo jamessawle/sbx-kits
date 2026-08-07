@@ -14,6 +14,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@3c4e3dcb1aa7874d2c16be7d79418e9b7efd6261 # v4.8.2
+        with:
+          fail-on-severity: high
+          # No license allow/deny list: this check currently enforces vulnerability risk only.
+          comment-summary-in-pr: on-failure
+
   validate:
     name: Validate
     runs-on: ubuntu-24.04

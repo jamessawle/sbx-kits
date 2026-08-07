@@ -1,10 +1,12 @@
 min_version = "2026.5.2"
 
 [tools]
+actionlint = "1.7.12"
 node = "24.4.1"
 shellcheck = "0.11.0"
 shfmt = "3.13.1"
 tombi = "1.2.4"
+zizmor = "1.29.0"
 
 [tasks.setup]
 description = "Install repository tools and dependencies"
@@ -38,6 +40,8 @@ run = [
 [tasks.lint]
 description = "Run static analysis"
 run = [
+  "actionlint .github/workflows/*.yml",
+  "zizmor .github/workflows",
   "npm exec -- markdownlint-cli2",
   "tombi lint --offline --error-on-warnings mise.toml",
   "shellcheck .docker-sbx/sandbox.sh .githooks/* .mise/tasks/sandbox .mise/tasks/hooks/*",

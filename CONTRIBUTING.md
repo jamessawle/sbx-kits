@@ -73,8 +73,8 @@ update is available, it opens a pull request and enables auto-merge after the
 repository's required checks pass. Repository development tools are outside
 this update and release cycle.
 
-The updater uses the repository `GITHUB_TOKEN` by default. If GitHub suppresses
-checks or the release workflow after an automated merge, configure an
-`SBX_KITS_AUTOMATION_TOKEN` repository secret with contents and pull-request
-write access. Repository auto-merge must be enabled for dependency pull
-requests to merge automatically.
+Configure an `SBX_KITS_AUTOMATION_TOKEN` repository secret with contents and
+pull-request write access so that dependency pull requests trigger validation
+and their merges trigger releases. The updater falls back to `GITHUB_TOKEN`,
+but GitHub suppresses workflows caused by that token. Repository auto-merge
+must also be enabled for dependency pull requests to merge automatically.

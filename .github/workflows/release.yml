@@ -8,7 +8,7 @@ on:
       - kits/**
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: kit-release
@@ -19,6 +19,8 @@ jobs:
     name: Create CalVer release
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    permissions:
+      contents: write
 
     steps:
       - name: Check out repository

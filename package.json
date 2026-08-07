@@ -6,7 +6,7 @@
   },
   "packageManager": "npm@11.4.2",
   "scripts": {
-    "test": "node --test",
+    "test": "node --test --experimental-test-coverage --test-coverage-include='scripts/**/*.mjs' --test-coverage-include='.github/scripts/**/*.mjs' --test-coverage-branches=80",
     "validate:metadata": "node scripts/validate-kit-metadata.mjs"
   },
   "devDependencies": {

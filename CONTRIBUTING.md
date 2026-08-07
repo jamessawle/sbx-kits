@@ -60,3 +60,21 @@ Run the same complete check before creating a tag:
 ```sh
 mise run validate
 ```
+
+## Releases
+
+Changes under `kits/` are released automatically after they reach `main` and
+pass validation. Releases use CalVer tags in the form `vYYYY.MM.NN`; the final
+component is a two-digit sequence that restarts each month. Months without kit
+changes have no release.
+
+A scheduled workflow checks dependencies pinned within kits each week. When an
+update is available, it opens a pull request and enables auto-merge after the
+repository's required checks pass. Repository development tools are outside
+this update and release cycle.
+
+The updater uses the repository `GITHUB_TOKEN` by default. If GitHub suppresses
+checks or the release workflow after an automated merge, configure an
+`SBX_KITS_AUTOMATION_TOKEN` repository secret with contents and pull-request
+write access. Repository auto-merge must be enabled for dependency pull
+requests to merge automatically.

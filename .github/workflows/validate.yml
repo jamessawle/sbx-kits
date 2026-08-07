@@ -33,8 +33,8 @@ jobs:
 
       - name: Install Docker Sandbox CLI
         env:
-          SBX_CHECKSUM: 770abf7f91b13aba86cc7bb7d548b8e07c812d5a109321905e7b7da0ad07d998
-          SBX_VERSION: 0.37.0
+          SBX_CHECKSUM: 146daaebd948f2bbb8e46c31c139b79531c9a780f94f915a0fc4cac2ebcfb05b
+          SBX_VERSION: 0.35.0
         run: |
           archive=$(mktemp)
           extract_dir=$(mktemp -d)

@@ -1,6 +1,6 @@
 # sbx-kits
 
-[![Latest tag](https://img.shields.io/github/v/tag/jamessawle/sbx-kits?sort=semver)](https://github.com/jamessawle/sbx-kits/tags)
+[![Latest release](https://img.shields.io/github/v/release/jamessawle/sbx-kits)](https://github.com/jamessawle/sbx-kits/releases)
 
 Reusable [Docker Sandbox](https://docs.docker.com/ai/sandboxes/) (`sbx`) kits
 for running coding agents in isolated environments. Each kit grants one focused
@@ -74,9 +74,12 @@ DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES='["docker.io/","github.com/docker/","github
     codex .
 ```
 
-Tags are immutable snapshots of every kit in the repository. Pin a tag and
-upgrade deliberately; use a commit SHA if you need a guarantee independent of
-that convention.
+Releases use CalVer tags in the form `vYYYY.MM.NN`, where `NN` is the release
+sequence within the month. A release is created whenever a change under
+`kits/` reaches `main`; months without kit changes have no release. Tags are
+immutable snapshots of every kit in the repository. Pin a tag and upgrade
+deliberately; use a commit SHA if you need a guarantee independent of that
+convention.
 
 ## Contributing
 

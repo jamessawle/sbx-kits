@@ -1,6 +1,6 @@
 # sbx-kits
 
-[![Latest release](https://img.shields.io/github/v/release/jamessawle/sbx-kits)](https://github.com/jamessawle/sbx-kits/releases)
+[![Latest release](https://img.shields.io/github/v/release/jamessawle/sbx-kits?sort=date)](https://github.com/jamessawle/sbx-kits/releases)
 
 Reusable [Docker Sandbox](https://docs.docker.com/ai/sandboxes/) (`sbx`) kits
 for running coding agents in isolated environments. Each kit grants one focused

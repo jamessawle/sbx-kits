@@ -42,6 +42,7 @@ Git hooks.
 | `mise run fmt`       | Format authored source files                            |
 | `mise run fmt:check` | Check source formatting                                 |
 | `mise run lint`      | Run static analysis                                     |
+| `mise run test`      | Run focused repository tests                            |
 | `mise run validate`  | Run all checks, including Docker Sandbox kit validation |
 | `mise run sandbox`   | Manage the Docker Sandbox                               |
 

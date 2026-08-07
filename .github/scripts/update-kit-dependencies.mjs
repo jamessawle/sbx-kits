@@ -31,8 +31,5 @@ if (pinnedVersion === publishedVersion) {
   process.exit(0);
 }
 
-writeFileSync(
-  specPath,
-  spec.replace(versionPattern, `${packageName}@${publishedVersion}`),
-);
+writeFileSync(specPath, spec.replace(versionPattern, `${packageName}@${publishedVersion}`));
 console.log(`Updated ${packageName} from ${pinnedVersion} to ${publishedVersion}`);

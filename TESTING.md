@@ -59,6 +59,21 @@ Docker Sandbox validation are the reliable automated checks.
 
 ## OpenSSF evidence
 
+The project requires tests for major new and changed executable functionality
+in its [contribution policy](CONTRIBUTING.md#testing-policy), with explicit
+exception and alternative-validation requirements. Recent auditable examples
+show the policy already in practice:
+
+- The [kit metadata validator change][metadata-change] added the executable
+  validator and [focused fixture tests][metadata-tests] in the same commit.
+- The [expanded automation coverage change][coverage-change] refactored the
+  dependency updater for testable boundaries and added focused updater, shell,
+  and runtime test suites alongside the production changes.
+
+[metadata-change]: https://github.com/jamessawle/sbx-kits/commit/1516f61341ceee27822497ec27fa4311e3cef13e
+[metadata-tests]: https://github.com/jamessawle/sbx-kits/blob/1516f61341ceee27822497ec27fa4311e3cef13e/test/validate-kit-metadata.test.mjs
+[coverage-change]: https://github.com/jamessawle/sbx-kits/commit/919aa7a7705d329b4563753a7d8c2cf66de838cb
+
 - `dynamic_analysis` is supported by measured branch coverage above 80% for all
   instrumentable production JavaScript, plus automated dynamic shell and kit
   command tests.

@@ -52,6 +52,29 @@ in [`package.json`](package.json).
 See [`TESTING.md`](TESTING.md) for the test inventory, coverage policy, and the
 boundary between deterministic CI checks and Docker-backed manual validation.
 
+## Testing policy
+
+Major new functionality and significant changes to executable behavior must
+include automated tests in the same pull request. Tests should exercise the new
+or changed behavior and its important failure modes at the narrowest practical
+level. Bug fixes should include a regression test that fails without the fix.
+
+Use the validation appropriate to the type of change:
+
+- Executable JavaScript, shell automation, and runtime kit commands require
+  focused automated tests, plus `mise run test`.
+- Kit specifications, repository configuration, workflows, and metadata require
+  the relevant repository validators, linters, or `sbx kit validate` checks.
+- Documentation-only changes require formatting and link or metadata validation
+  when the edited content is covered by those checks; they do not require new
+  runtime tests.
+
+Run `mise run validate` before submitting a pull request whenever the required
+Docker tooling is available. The pull request must identify the tests and
+validation run. If an automated test is not practical, explain the concrete
+technical reason, describe the alternative validation performed, and identify
+any remaining risk. Cost or schedule alone is not a sufficient exception.
+
 ## Git hooks
 
 The pre-commit hook runs formatting and linting against the staged repository

@@ -8,10 +8,21 @@ Closes #
 
 ## Validation
 
-<!-- List the checks you ran, or explain why validation is not needed. -->
+<!--
+List the exact checks you ran and identify tests added or updated for changed
+behavior. If an automated test is not practical, give the concrete technical
+reason, alternative validation, and remaining risk.
+-->
 
-- [ ] Tests or validation have been added or run as appropriate.
+- [ ] Automated tests have been added or updated for major new or changed
+      executable functionality.
+- [ ] The relevant tests and repository validation have been run and are listed
+      below.
+- [ ] Any exception to automated testing is explained with alternative
+      validation and remaining risk, or no exception is needed.
 - [ ] Documentation has been updated or is not needed.
+
+<!-- Tests and validation: -->
 
 ## Security and network impact
 

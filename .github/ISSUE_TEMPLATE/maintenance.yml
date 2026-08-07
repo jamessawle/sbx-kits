@@ -1,0 +1,56 @@
+name: Repository maintenance
+description: Track security, automation, documentation, or community-health work
+title: "chore: "
+labels:
+  - enhancement
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Security
+        - Continuous integration
+        - Release automation
+        - Dependency management
+        - Documentation
+        - Community health
+        - Repository settings
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: Describe the outcome this work should achieve and why it matters.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Proposed scope
+      description: List the concrete changes that are in scope.
+      placeholder: |
+        - Add ...
+        - Configure ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List the observable conditions that will make this issue complete.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Implementation notes
+      description: Record constraints, useful links, sequencing, or decisions that should guide the work.

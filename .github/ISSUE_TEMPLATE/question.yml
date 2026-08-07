@@ -1,0 +1,37 @@
+name: Usage question
+description: Ask for help using or composing the kits
+title: "question: "
+labels:
+  - question
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Explain what you are trying to achieve and where you are stuck.
+    validations:
+      required: true
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Relevant configuration
+      description: Include kit references or commands, with secrets removed.
+      render: shell
+
+  - type: input
+    id: sbx-version
+    attributes:
+      label: Docker Sandbox version
+      description: Paste the output of `sbx version`, if relevant.
+      placeholder: 0.35.0
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I checked the repository and Docker Sandbox documentation.
+          required: true
+        - label: I searched the existing issues for an answer.
+          required: true

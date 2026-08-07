@@ -23,7 +23,7 @@ depends = ["fmt:check", "lint", "test", "validate:metadata"]
 run = "./.docker-sbx/sandbox.sh validate"
 
 [tasks.test]
-description = "Run focused repository tests"
+description = "Run repository tests with enforced JavaScript coverage"
 run = "npm test"
 
 [tasks."validate:metadata"]

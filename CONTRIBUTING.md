@@ -42,12 +42,15 @@ Git hooks.
 | `mise run fmt`       | Format authored source files                            |
 | `mise run fmt:check` | Check source formatting                                 |
 | `mise run lint`      | Run static analysis                                     |
-| `mise run test`      | Run focused repository tests                            |
+| `mise run test`      | Run tests and enforce JavaScript branch coverage        |
 | `mise run validate`  | Run all checks, including Docker Sandbox kit validation |
 | `mise run sandbox`   | Manage the Docker Sandbox                               |
 
 The toolchain is pinned in [`mise.toml`](mise.toml); Node-based tools are pinned
 in [`package.json`](package.json).
+
+See [`TESTING.md`](TESTING.md) for the test inventory, coverage policy, and the
+boundary between deterministic CI checks and Docker-backed manual validation.
 
 ## Git hooks
 

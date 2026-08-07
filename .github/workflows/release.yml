@@ -71,7 +71,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.version.outputs.tag }}
         run: |
-          git tag --annotate "$RELEASE_TAG" --message "$RELEASE_TAG" "$GITHUB_SHA"
+          git tag "$RELEASE_TAG" "$GITHUB_SHA"
           git push origin "$RELEASE_TAG"
           gh release create "$RELEASE_TAG" \
             --generate-notes \

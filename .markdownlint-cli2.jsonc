@@ -4,5 +4,5 @@
     "MD013": false,
   },
   "gitignore": true,
-  "globs": ["**/*.md"],
+  "globs": ["**/*.md", "!lychee/**"],
 }

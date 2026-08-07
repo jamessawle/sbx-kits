@@ -18,13 +18,21 @@ run = [
 
 [tasks.validate]
 description = "Run all checks, including Docker Sandbox kit validation"
-depends = ["fmt:check", "lint"]
+depends = ["fmt:check", "lint", "test", "validate:metadata"]
 run = "./.docker-sbx/sandbox.sh validate"
+
+[tasks.test]
+description = "Run focused repository tests"
+run = "npm test"
+
+[tasks."validate:metadata"]
+description = "Validate kit metadata and documentation consistency"
+run = "npm run validate:metadata"
 
 [tasks."fmt:check"]
 description = "Check source formatting"
 run = [
-  'npm exec -- prettier --check "**/*.{json,jsonc,md,yaml}"',
+  'npm exec -- prettier --check "**/*.{json,jsonc,md,mjs,yaml}"',
   "tombi format --offline --check mise.toml",
   "shfmt -d .docker-sbx/sandbox.sh .githooks .mise/tasks",
 ]
@@ -32,7 +40,7 @@ run = [
 [tasks.fmt]
 description = "Format authored source files"
 run = [
-  'npm exec -- prettier --write "**/*.{json,jsonc,md,yaml}"',
+  'npm exec -- prettier --write "**/*.{json,jsonc,md,mjs,yaml}"',
   "tombi format --offline mise.toml",
   "shfmt -w .docker-sbx/sandbox.sh .githooks .mise/tasks",
 ]

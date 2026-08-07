@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Docker Sandbox documentation
+    url: https://docs.docker.com/ai/sandboxes/
+    about: Check the upstream documentation for Docker Sandbox usage questions.

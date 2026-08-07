@@ -1,0 +1,87 @@
+name: Bug report
+description: Report a reproducible problem with a kit or repository tooling
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem. Please remove secrets and other sensitive information from logs.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the repository is affected?
+      options:
+        - Harness kit
+        - Language kit
+        - Mise network kit
+        - Repository tooling or automation
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: kit
+    attributes:
+      label: Kit
+      description: Provide the kit directory or source reference, if applicable.
+      placeholder: kits/language/node-npm at v2026.08.01
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest set of commands or configuration that reproduces the problem.
+      placeholder: |
+        1. Run ...
+        2. Configure ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: input
+    id: sbx-version
+    attributes:
+      label: Docker Sandbox version
+      description: Paste the output of `sbx version`.
+      placeholder: 0.35.0
+    validations:
+      required: true
+
+  - type: input
+    id: host
+    attributes:
+      label: Host environment
+      description: Include the operating system, architecture, and Docker Desktop version where relevant.
+      placeholder: macOS 15, Apple silicon, Docker Desktop 4.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste concise, redacted logs or other diagnostic output.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched the existing issues for duplicates.
+          required: true
+        - label: I removed credentials, tokens, and other sensitive information.
+          required: true

@@ -1,6 +1,7 @@
 # sbx-kits
 
 [![CI](https://github.com/jamessawle/sbx-kits/actions/workflows/pr-check.yml/badge.svg?branch=main)](https://github.com/jamessawle/sbx-kits/actions/workflows/pr-check.yml?query=branch%3Amain)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/jamessawle/sbx-kits/badge)](https://scorecard.dev/viewer/?uri=github.com/jamessawle/sbx-kits)
 [![Latest release](https://img.shields.io/github/v/release/jamessawle/sbx-kits?sort=date&label=release)](https://github.com/jamessawle/sbx-kits/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 

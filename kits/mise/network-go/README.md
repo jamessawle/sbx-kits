@@ -1,6 +1,8 @@
 # mise-network-go
 
-Permits Go toolchain, module, and checksum downloads used through Mise.
+Permits Go toolchain and module downloads.
+
+Specification: [`spec.yaml`](spec.yaml)
 
 ## Capabilities
 
@@ -12,10 +14,24 @@ Permits Go toolchain, module, and checksum downloads used through Mise.
 
 ## Composition
 
-Compose with the community
-[Mise kit](https://github.com/docker/sbx-kits-contrib/tree/main/mise).
+Compose this mixin with the community
+[Mise kit](https://github.com/docker/sbx-kits-contrib/tree/main/mise) and a
+project that declares its Go version. No language workspace-isolation kit is
+currently required.
 
-## Operational notes
+## Externally visible behavior
 
-This kit grants only the Go-specific hosts needed beyond the community Mise
-kit. It does not install Go or configure a project toolchain version.
+The named hosts are added to the sandbox's outbound network policy. The kit
+runs no commands, writes no files, and sets no environment variables.
+
+## Security implications
+
+The sandbox can download executable toolchains and project dependencies from
+the hosts listed in the specification. Review project module sources and lock
+or checksum data before execution. Organization policy may still deny a host.
+
+## Operational constraints
+
+This kit grants network access only. It does not install Go or configure a
+project toolchain version. Download paths may change upstream; compare any
+blocked hostname with the specification before expanding the policy.

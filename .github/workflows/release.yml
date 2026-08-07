@@ -1,0 +1,79 @@
+name: Release kits
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - kits/**
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kit-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Create CalVer release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Install repository tools
+        uses: jdx/mise-action@v4.2.3
+        with:
+          cache: true
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Install Docker Sandbox CLI
+        env:
+          SBX_CHECKSUM: 146daaebd948f2bbb8e46c31c139b79531c9a780f94f915a0fc4cac2ebcfb05b
+          SBX_VERSION: 0.35.0
+        run: |
+          archive=$(mktemp)
+          extract_dir=$(mktemp -d)
+          curl --fail --location --silent --show-error \
+            "https://github.com/docker/sbx-releases/releases/download/v${SBX_VERSION}/DockerSandboxes-linux-amd64.tar.gz" \
+            --output "$archive"
+          printf '%s  %s\n' "$SBX_CHECKSUM" "$archive" | sha256sum --check
+          tar -xzf "$archive" -C "$extract_dir"
+          sudo install -m 0755 "$extract_dir/docker-sbx/sbx" /usr/local/bin/sbx
+          sbx version
+
+      - name: Validate repository
+        run: mise validate
+
+      - name: Select release version
+        id: version
+        run: |
+          release_month=$(date -u +%Y.%m)
+          latest_sequence=$(
+            git tag --list "v${release_month}.*" |
+              sed -n "s/^v${release_month}\.\([0-9][0-9]*\)$/\1/p" |
+              sort -n |
+              tail -1
+          )
+          next_sequence=$((10#${latest_sequence:-0} + 1))
+          printf -v release_tag 'v%s.%02d' "$release_month" "$next_sequence"
+          echo "tag=$release_tag" >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          git tag --annotate "$RELEASE_TAG" --message "$RELEASE_TAG" "$GITHUB_SHA"
+          git push origin "$RELEASE_TAG"
+          gh release create "$RELEASE_TAG" \
+            --generate-notes \
+            --target "$GITHUB_SHA" \
+            --title "$RELEASE_TAG"

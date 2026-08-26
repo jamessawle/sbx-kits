@@ -4,26 +4,26 @@ name: internal-sbx-validator
 displayName: Internal Docker Sandbox kit validator
 description: Installs the sbx CLI used to validate this repository's kits
 
-caps:
+permissions:
   network:
     allow:
       - github.com
       - objects.githubusercontent.com
 
-commands:
+setup:
   install:
     - command: |
         set -euo pipefail
 
-        version=0.37.0
+        version=0.39.0
         case "$(uname -m)" in
           x86_64)
             architecture=amd64
-            checksum=770abf7f91b13aba86cc7bb7d548b8e07c812d5a109321905e7b7da0ad07d998
+            checksum=2ec45bc7938c20c2f406fe8cc72294ad5a954bdc047601484b89bf1a108311d4
             ;;
           aarch64 | arm64)
             architecture=arm64
-            checksum=b55eb978e3b5661ddca67182fb5c33d3ceacffbc259c4c3c6141a545c9b2bcec
+            checksum=39c470a5f5e0991b1c2358952e2ab32a7b0309bfa57ac62b6bbc64b466d02c17
             ;;
           *)
             echo "Unsupported architecture: $(uname -m)" >&2

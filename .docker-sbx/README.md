@@ -17,9 +17,8 @@ over the workspace's `node_modules`.
 
 The internal validator installs only the pinned `sbx` CLI. It supports local
 `sbx kit validate` commands, but cannot create nested sandboxes because the
-development sandbox does not expose KVM. Its v0.37.0 pin is separate from the
-public kits' v0.35.0 compatibility target because v0.35.x has no Linux ARM64
-build.
+development sandbox does not expose KVM. Its v0.39.0 pin matches the public
+kits' compatibility target.
 
 | Command                     | Purpose                                        |
 | --------------------------- | ---------------------------------------------- |

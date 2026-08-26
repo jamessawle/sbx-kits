@@ -4,7 +4,7 @@ name: mise-network-hugo
 displayName: Mise Hugo network access
 description: Permits Hugo Extended version resolution
 
-caps:
+permissions:
   network:
     allow:
       # GitHub release hosts are supplied by the community Mise kit.

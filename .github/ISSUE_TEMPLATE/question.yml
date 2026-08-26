@@ -24,7 +24,7 @@ body:
     attributes:
       label: Docker Sandbox version
       description: Paste the output of `sbx version`, if relevant.
-      placeholder: 0.35.0
+      placeholder: 0.39.0
 
   - type: checkboxes
     id: checks

@@ -4,7 +4,7 @@ name: mise-network-python-uv
 displayName: Mise Python and uv network access
 description: Permits Python toolchain and locked package downloads
 
-caps:
+permissions:
   network:
     allow:
       # Tool version resolution beyond the GitHub hosts supplied by the

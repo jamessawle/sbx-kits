@@ -4,7 +4,7 @@ name: mise-network-go
 displayName: Mise Go network access
 description: Permits Go toolchain and module downloads
 
-caps:
+permissions:
   network:
     allow:
       # Version resolution and toolchain downloads.

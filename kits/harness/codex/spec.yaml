@@ -4,13 +4,13 @@ name: harness-codex
 displayName: Codex CLI version override
 description: Pins Codex independently of the version bundled with Docker Sandbox
 
-caps:
+permissions:
   network:
     allow:
       - registry.npmjs.org
       - chatgpt.com:443
 
-commands:
+setup:
   install:
     # Docker Sandbox couples its bundled Codex version to the sbx release.
     # Installing an exact version here lets consumers upgrade either one

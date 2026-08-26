@@ -4,7 +4,7 @@ name: mise-network-zig
 displayName: Mise Zig network access
 description: Permits Zig toolchain downloads
 
-caps:
+permissions:
   network:
     allow:
       - ziglang.org

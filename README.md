@@ -10,7 +10,7 @@ Reusable [Docker Sandbox](https://docs.docker.com/ai/sandboxes/) (`sbx`) kits
 for running coding agents in isolated environments. Each kit grants one focused
 capability so projects can compose only the policy they need.
 
-Tested with `sbx 0.35.0`.
+Tested with `sbx 0.39.0`.
 
 > [!IMPORTANT]
 > A kit can install software as root and expand a sandbox's network access. Pin
@@ -31,7 +31,7 @@ sbx version
 ```
 
 You also need a local project directory and credentials for the coding agent you
-intend to run. This repository currently tests `sbx 0.35.0`; other releases may
+intend to run. This repository currently tests `sbx 0.39.0`; other releases may
 interpret the experimental kit format differently.
 
 ### 2. Select and compose kits
@@ -167,17 +167,17 @@ description: Keeps Linux node_modules out of bind-mounted host workspaces
 ### Network capabilities
 
 ```yaml
-caps:
+permissions:
   network:
     allow:
       - registry.npmjs.org
 ```
 
-`caps.network.allow` adds outbound destinations to the sandbox policy. An entry
-permits access; it does not install or configure the named tool. These rules
-broaden the sandbox's security boundary and can still be overridden by a more
-restrictive organization policy. Review the exact hosts in the selected kit's
-specification.
+`permissions.network.allow` adds outbound destinations to the sandbox policy.
+An entry permits access; it does not install or configure the named tool.
+These rules broaden the sandbox's security boundary and can still be
+overridden by a more restrictive organization policy. Review the exact hosts
+in the selected kit's specification.
 
 ### Environment variables
 
@@ -195,11 +195,11 @@ Docker Sandbox manages those variables to enforce network policy.
 ### Lifecycle commands and files
 
 ```yaml
-commands:
+setup:
   install:
     - command: npm install --global example@1.2.3
       description: Install a pinned tool
-  initFiles:
+  files:
     - path: /home/agent/.cache/example/.keep
       mode: "0644"
       content: ""
@@ -210,13 +210,14 @@ commands:
       description: Start the service
 ```
 
-- `commands.install` runs once during sandbox creation. A string command is run
+- `setup.install` runs once during sandbox creation. A string command is run
   through a shell and defaults to root.
-- `commands.initFiles` writes the declared path and content while the sandbox is
+- `setup.files` writes the declared path and content while the sandbox is
   initialized. `mode` is an octal permission string.
-- `commands.startup` runs on every sandbox start. Array commands are executed
-  directly rather than interpreted by a shell; use an explicit shell entry when
-  shell syntax is required. Startup commands must be idempotent.
+- `setup.startup` runs on every sandbox start. Its `command` must be an array,
+  executed directly rather than interpreted by a shell; use an explicit shell
+  entry (`[bash, -c, "..."]`) when shell syntax is required. Startup commands
+  must be idempotent.
 - `user` selects the numeric user. `"0"` is root. `description` explains the
   operation shown to users and maintainers.
 

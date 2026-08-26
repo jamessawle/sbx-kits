@@ -56,7 +56,7 @@ body:
     attributes:
       label: Docker Sandbox version
       description: Paste the output of `sbx version`.
-      placeholder: 0.35.0
+      placeholder: 0.39.0
     validations:
       required: true
 

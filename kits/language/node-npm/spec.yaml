@@ -4,13 +4,13 @@ name: language-node-npm
 displayName: Node.js npm workspace isolation
 description: Keeps Linux node_modules out of bind-mounted host workspaces
 
-caps:
+permissions:
   network:
     allow:
       - registry.npmjs.org
 
-commands:
-  initFiles:
+setup:
+  files:
     - path: /home/agent/.cache/node-bind-mounts/.keep
       mode: "0644"
       content: ""

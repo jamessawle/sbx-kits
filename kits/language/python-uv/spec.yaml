@@ -4,7 +4,7 @@ name: language-python-uv
 displayName: Python and uv workspace isolation
 description: Keeps Python and uv generated state out of bind-mounted workspaces
 
-caps:
+permissions:
   network:
     allow:
       - pypi.org

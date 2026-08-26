@@ -1,0 +1,49 @@
+.github/ISSUE_TEMPLATE/bug.yml
+  s_9a703b6f4e5afb::t_c05b52474805d1 59
+.github/ISSUE_TEMPLATE/question.yml
+  s_9a703b6f4e5afb::t_933c4fc004921b 27
+kits/language/python-uv/spec.yaml
+  s_9a703b6f4e5afb::t_a5d07c78996da2 7
+kits/mise/network-go/spec.yaml
+  s_9a703b6f4e5afb::t_bffa0b7b86976b 7
+kits/mise/network-hugo/spec.yaml
+  s_9a703b6f4e5afb::t_d6e9855ae8b742 7
+kits/mise/network-node/spec.yaml
+  s_9a703b6f4e5afb::t_20132e9fb085ed 7
+kits/mise/network-python-uv/spec.yaml
+  s_9a703b6f4e5afb::t_e08d28752a3eb5 7
+kits/mise/network-zig/spec.yaml
+  s_9a703b6f4e5afb::t_6438b2ed02562e 7
+.docker-sbx/README.md
+  s_9a703b6f4e5afb::t_f526d9d3a2e31e 20-21
+.docker-sbx/kits/sbx-validator/README.md
+  s_9a703b6f4e5afb::t_69bff57c4de288 12-13
+.docker-sbx/kits/sbx-validator/spec.yaml
+  s_9a703b6f4e5afb::t_c67611c10b01e1 7,13,18,22,26
+.github/workflows/pr-check.yml
+  s_9a703b6f4e5afb::t_13ed269fa98bd4 52-53
+.github/workflows/release.yml
+  s_9a703b6f4e5afb::t_3c45da73f35068 43-44
+README.md
+  s_9a703b6f4e5afb::t_39ed21c8543927 13,34,170,176-180,198,202,213,215,217-220
+kits/harness/codex/spec.yaml
+  s_9a703b6f4e5afb::t_ba93cb5317e4c1 7,13
+kits/language/node-npm/spec.yaml
+  s_9a703b6f4e5afb::t_3fb2c5a8a21939 7,12-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "d6067d2ff5f5779b4230f8bc86a801f7d9442d45",
+  "prompts": {},
+  "sessions": {
+    "s_9a703b6f4e5afb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2b21d9a7-93ab-4a1d-ba62-a457e04a6170",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "James Sawle <jamessawle@hotmail.com>"
+    }
+  }
+}

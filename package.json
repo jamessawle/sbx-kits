@@ -10,7 +10,7 @@
     "validate:metadata": "node scripts/validate-kit-metadata.mjs"
   },
   "devDependencies": {
-    "markdownlint-cli2": "0.23.2",
+    "markdownlint-cli2": "0.23.3",
     "prettier": "3.9.6"
   }
 }
